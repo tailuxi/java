@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft 服务器组织报备系统</title>
+    <style>
+        /* 基础样式 - 模仿 Minecraft 风格 */
+        body {
+            background-color: #1a1a1a; /* 深色背景 */
+            color: #e0e0e0; /* 浅色文字 */
+            font-family: 'Minecraft', Arial, sans-serif; /* 使用 Minecraft 字体更佳 */
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        /* 如果你有 Minecraft 字体文件，可以这样引入 */
+        /* @font-face {
+            font-family: 'Minecraft';
+            src: url('minecraft-font.woff2') format('woff2');
+        } */
+        
+        /* 主容器样式 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #2d2d2d;
+            padding: 20px;
+            border: 4px solid #555;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 标题样式 - Minecraft 风格 */
+        h1 {
+            color: #55ff55; /* Minecraft 绿色 */
+            text-align: center;
+            text-shadow: 2px 2px 0 #000;
+            border-bottom: 3px solid #555;
+            padding-bottom: 10px;
+        }
+        
+        /* 表单组样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        /* 标签样式 */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #55ff55; /* Minecraft 绿色 */
+            font-weight: bold;
+        }
+        
+        /* 输入框样式 - 模仿 Minecraft UI */
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            background-color: #3d3d3d;
+            border: 2px solid #555;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        /* 星级选择样式 */
+        .star-rating {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+        
+        .star-rating label {
+            color: #ffcc00; /* 星星颜色 */
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .star-rating input[type="radio"]:checked ~ label {
+            color: #ff9900; /* 选中星星颜色 */
+        }
+        
+        /* 提交按钮样式 - 模仿 Minecraft 按钮 */
+        .submit-btn {
+            background-color: #4CAF50; /* 绿色按钮 */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #45a049; /* 悬停时变深 */
+        }
+        
+        /* 组织列表样式 */
+        .organization-list {
+            margin-top: 30px;
+        }
+        
+        .organization-item {
+            background-color: #3d3d3d;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #555;
+            border-radius: 5px;
+        }
+        
+        /* 响应式设计 - 小屏幕调整 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            input, select {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ Minecraft 服务器组织报备系统 ⚔️</h1>
+        
+        <!-- 表单部分 -->
+        <form id="organizationForm">
+            <!-- 组织名称输入框 -->
+            <div class="form-group">
+                <label for="orgName">组织名称</label>
+                <input type="text" id="orgName" name="orgName" placeholder="请输入您的组织名称" required>
+            </div>
+            
+            <!-- 报备人输入框 -->
+            <div class="form-group">
+                <label for="reporter">报备人</label>
+                <input type="text" id="reporter" name="reporter" placeholder="请输入报备人游戏ID" required>
+            </div>
+            
+            <!-- QQ号输入框 -->
+            <div class="form-group">
+                <label for="qqNumber">QQ号</label>
+                <input type="text" id="qqNumber" name="qqNumber" placeholder="请输入报备人QQ号" required>
+            </div>
+            
+            <!-- 组织星级选择 -->
+            <div class="form-group">
+                <label>组织星级</label>
+                <div class="star-rating">
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+                    
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    
+                    <input type="radio" id="star3" name="rating" value="3" checked>
+                    <label for="star3">★</label>
+                    
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
+                </div>
+            </div>
+            
+            <!-- 提交按钮 -->
+            <button type="submit" class="submit-btn">提交报备</button>
+        </form>
+        
+        <!-- 已报备组织列表 -->
+        <div class="organization-list">
+            <h2>已报备组织列表</h2>
+            
+            <!-- 示例组织条目 -->
+            <div class="organization-item">
+                <h3>钻石镐联盟 ★★★★</h3>
+                <p><strong>报备人:</strong> Steve</p>
+                <p><strong>QQ号:</strong> 123456789</p>
+            </div>
+            
+            <div class="organization-item">
+                <h3>红石科技社 ★★★</h3>
+                <p><strong>报备人:</strong> Alex</p>
+                <p><strong>QQ号:</strong> 987654321</p>
+            </div>
+            
+            <!-- 动态添加的组织会出现在这里 -->
+            <div id="organizationsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript 代码 - 处理表单提交
+        document.getElementById('organizationForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止表单默认提交行为
+            
+            // 获取表单值
+            const orgName = document.getElementById('orgName').value;
+            const reporter = document.getElementById('reporter').value;
+            const qqNumber = document.getElementById('qqNumber').value;
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+            
+            // 创建星星字符串
+            let stars = '';
+            for (let i = 0; i < rating; i++) {
+                stars += '★';
+            }
+            
+            // 创建新的组织条目
+            const orgItem = document.createElement('div');
+            orgItem.className = 'organization-item';
+            orgItem.innerHTML = `
+                <h3>${orgName} ${stars}</h3>
+                <p><strong>报备人:</strong> ${reporter}</p>
+                <p><strong>QQ号:</strong> ${qqNumber}</p>
+            `;
+            
+            // 添加到组织列表容器
+            document.getElementById('organizationsContainer').prepend(orgItem);
+            
+            // 清空表单
+            this.reset();
+            
+            // 重置星级选择为默认3星
+            document.getElementById('star3').checked = true;
+            
+            // 提示用户
+            alert('组织报备成功！');
+        });
+    </script>
+</body>
+</html>
