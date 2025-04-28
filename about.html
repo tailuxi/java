@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Java 1.12.2 完全指南 | 方块世界</title>
+    <style>
+        /* 基础样式 - Minecraft风格 */
+        body {
+            font-family: 'Minecraft', monospace;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://example.com/minecraft-dirt-bg.png');
+            background-attachment: fixed;
+        }
+        
+        /* 导航栏样式 */
+        .navbar {
+            background-color: #2d2d2d;
+            padding: 10px 0;
+            border-bottom: 4px solid #5a5a5a;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            color: #55ff55;
+            text-shadow: 2px 2px 0 #005500;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 2px solid #5a5a5a;
+            background-color: #3d3d3d;
+        }
+        
+        .nav-links a:hover {
+            background-color: #4d4d4d;
+            color: #55ff55;
+        }
+        
+        /* 折叠按钮 */
+        .collapse-btn {
+            display: none;
+            background-color: #3d3d3d;
+            border: 2px solid #5a5a5a;
+            color: #e0e0e0;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        /* 主要内容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2d2d2d;
+            border: 4px solid #5a5a5a;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 标题样式 */
+        h1, h2, h3 {
+            color: #55ff55;
+            text-shadow: 2px 2px 0 #005500;
+        }
+        
+        h1 {
+            border-bottom: 3px solid #5a5a5a;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            border-left: 5px solid #55ff55;
+            padding-left: 10px;
+            margin-top: 30px;
+        }
+        
+        /* 内容区块 */
+        .content-block {
+            background-color: #3d3d3d;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #5a5a5a;
+        }
+        
+        /* 注释样式 */
+        .note {
+            background-color: #4d4d4d;
+            border-left: 4px solid #ffaa00;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 2px solid #5a5a5a;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #4d4d4d;
+            color: #55ff55;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #3d3d3d;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            background-color: #3d3d3d;
+            color: #e0e0e0;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: 2px solid #5a5a5a;
+            margin: 10px 0;
+        }
+        
+        .btn:hover {
+            background-color: #4d4d4d;
+            color: #55ff55;
+        }
+        
+        .btn-primary {
+            background-color: #005500;
+            color: #55ff55;
+        }
+        
+        .btn-primary:hover {
+            background-color: #006600;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .collapse-btn {
+                display: block;
+            }
+            
+            .navbar-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo">Minecraft 1.12.2 指南</div>
+            <button class="collapse-btn" onclick="toggleNav()">≡ 菜单</button>
+            <div class="nav-links" id="navLinks">
+                <a href="#basics">基础玩法</a>
+                <a href="#crafting">合成系统</a>
+                <a href="#biomes">生物群系</a>
+                <a href="#mobs">生物介绍</a>
+                <a href="#redstone">红石系统</a>
+                <a href="#advanced">高级技巧</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="container">
+        <h1>Minecraft Java Edition 1.12.2 完全指南</h1>
+        
+        <div class="content-block">
+            <p>欢迎来到 Minecraft Java 1.12.2 版本的完全指南！这个版本被称为"多彩世界更新"，引入了许多新特性和改进。本指南将带你全面了解这个版本的玩法。</p>
+            
+            <div class="note">
+                <strong>版本注释：</strong> 1.12.2 是1.12系列的最后一个版本，修复了许多bug并提高了稳定性，是许多模组玩家喜爱的版本。
+            </div>
+        </div>
+        
+        <!-- 基础玩法部分 -->
+        <h2 id="basics">基础玩法</h2>
+        
+        <div class="content-block">
+            <h3>第一天生存指南</h3>
+            
+            <p>在Minecraft中生存的第一天至关重要，以下是你应该做的事情：</p>
+            
+            <ol>
+                <li>收集木材（约20个原木）</li>
+                <li>制作工作台和木制工具</li>
+                <li>收集石头并升级到石制工具</li>
+                <li>寻找食物（击杀动物或收集苹果）</li>
+                <li>在日落前建造简易庇护所</li>
+            </ol>
+            
+            <div class="note">
+                <strong>专家提示：</strong> 第一晚可以挖个洞躲起来，这样你就不需要立即建造完整的房子。
+            </div>
+            
+            <h3>资源收集优先级</h3>
+            
+            <table>
+                <tr>
+                    <th>阶段</th>
+                    <th>主要资源</th>
+                    <th>工具等级</th>
+                </tr>
+                <tr>
+                    <td>初期 (0-1天)</td>
+                    <td>木材、石头、食物</td>
+                    <td>木制/石制</td>
+                </tr>
+                <tr>
+                    <td>中期 (2-5天)</td>
+                    <td>铁、煤炭、动物产品</td>
+                    <td>铁制</td>
+                </tr>
+                <tr>
+                    <td>后期 (5天+)</td>
+                    <td>钻石、黑曜石、稀有材料</td>
+                    <td>钻石制</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- 合成系统部分 -->
+        <h2 id="crafting">合成系统</h2>
+        
+        <div class="content-block">
+            <h3>基本合成配方</h3>
+            
+            <p>以下是一些你必须知道的基本合成配方：</p>
+            
+            <table>
+                <tr>
+                    <th>物品</th>
+                    <th>配方</th>
+                    <th>用途</th>
+                </tr>
+                <tr>
+                    <td>工作台</td>
+                    <td>4个木板（任意排列）</td>
+                    <td>解锁3x3合成网格</td>
+                </tr>
+                <tr>
+                    <td>木棍</td>
+                    <td>2个垂直排列的木板</td>
+                    <td>工具和武器的柄</td>
+                </tr>
+                <tr>
+                    <td>火把</td>
+                    <td>1煤炭/木炭 + 1木棍</td>
+                    <td>照明和防止怪物生成</td>
+                </tr>
+                <tr>
+                    <td>熔炉</td>
+                    <td>8个圆石围成一圈</td>
+                    <td>烧炼物品和烹饪食物</td>
+                </tr>
+            </table>
+            
+            <div class="note">
+                <strong>合成技巧：</strong> 记住"T形"配方可以制作几乎所有工具（镐、斧、锹、剑）。
+            </div>
+            
+            <h3>高级合成</h3>
+            
+            <p>当你有了更多资源后，可以尝试这些高级合成：</p>
+            
+            <ul>
+                <li><strong>附魔台：</strong> 1书 + 2钻石 + 4黑曜石</li>
+                <li><strong>铁砧：</strong> 3铁块 + 4铁锭</li>
+                <li><strong>信标：</strong> 1下界之星 + 3黑曜石 + 5玻璃</li>
+                <li><strong>末影箱：</strong> 8黑曜石 + 1末影之眼</li>
+            </ul>
+        </div>
+        
+        <!-- 生物群系部分 -->
+        <h2 id="biomes">生物群系</h2>
+        
+        <div class="content-block">
+            <p>1.12.2版本包含了多种生物群系，每种都有独特的资源和特性：</p>
+            
+            <h3>主要生物群系</h3>
+            
+            <table>
+                <tr>
+                    <th>群系</th>
+                    <th>特征</th>
+                    <th>特有资源</th>
+                </tr>
+                <tr>
+                    <td>平原</td>
+                    <td>平坦开阔，适合建造</td>
+                    <td>马、大量动物</td>
+                </tr>
+                <tr>
+                    <td>森林</td>
+                    <td>树木密集</td>
+                    <td>木材、蘑菇</td>
+                </tr>
+                <tr>
+                    <td>沙漠</td>
+                    <td>干旱，昼夜温差大</td>
+                    <td>仙人掌、甘蔗、沙漠神殿</td>
+                </tr>
+                <tr>
+                    <td>丛林</td>
+                    <td>植被茂密，地形复杂</td>
+                    <td>可可豆、西瓜、丛林神庙</td>
+                </tr>
+                <tr>
+                    <td>针叶林</td>
+                    <td>云杉树为主</td>
+                    <td>狼、甜浆果</td>
+                </tr>
+            </table>
+            
+            <div class="note">
+                <strong>探索建议：</strong> 沙漠和丛林生物群系通常包含有价值的遗迹，如神殿和神庙。
+            </div>
+        </div>
+        
+        <!-- 生物介绍部分 -->
+        <h2 id="mobs">生物介绍</h2>
+        
+        <div class="content-block">
+            <h3>被动生物</h3>
+            
+            <ul>
+                <li><strong>牛：</strong> 提供牛肉和皮革</li>
+                <li><strong>猪：</strong> 提供猪肉，可骑乘（需胡萝卜钓竿）</li>
+                <li><strong>鸡：</strong> 提供羽毛、鸡肉和鸡蛋</li>
+                <li><strong>羊：</strong> 提供羊毛和羊肉，可染色</li>
+            </ul>
+            
+            <h3>敌对生物</h3>
+            
+            <ul>
+                <li><strong>僵尸：</strong> 常见夜间怪物，会召唤援军</li>
+                <li><strong>骷髅：</strong> 远程攻击，掉落骨头和箭</li>
+                <li><strong>蜘蛛：</strong> 能攀爬，白天中立</li>
+                <li><strong>苦力怕：</strong> 会自爆，掉落火药</li>
+                <li><strong>末影人：</strong> 高个子，会传送，讨厌被看</li>
+            </ul>
+            
+            <div class="note">
+                <strong>战斗技巧：</strong> 对付骷髅时使用"之"字形走位躲避箭矢，对付苦力怕时保持距离或一击必杀。
+            </div>
+            
+            <h3>Boss生物</h3>
+            
+            <ul>
+                <li><strong>凋灵：</strong> 由灵魂沙和凋灵骷髅头召唤</li>
+                <li><strong>末影龙：</strong> 末地的最终Boss</li>
+            </ul>
+        </div>
+        
+        <!-- 红石系统部分 -->
+        <h2 id="redstone">红石系统</h2>
+        
+        <div class="content-block">
+            <h3>红石基础</h3>
+            
+            <p>红石是Minecraft中的"电力系统"，可以用来创建各种机械装置：</p>
+            
+            <ul>
+                <li><strong>红石粉：</strong> 传输信号，最远15格</li>
+                <li><strong>红石火把：</strong> 电源和信号反转器</li>
+                <li><strong>红石中继器：</strong> 信号延迟和加强</li>
+                <li><strong>红石比较器：</strong> 信号比较和容器检测</li>
+            </ul>
+            
+            <h3>实用红石装置</h3>
+            
+            <ul>
+                <li><strong>自动门：</strong> 使用压力板或按钮触发</li>
+                <li><strong>自动农场：</strong> 使用活塞和水流收集作物</li>
+                <li><strong>物品分类机：</strong> 利用漏斗和红石比较器</li>
+                <li><strong>陷阱：</strong> 隐藏的活塞或TNT装置</li>
+            </ul>
+            
+            <div class="note">
+                <strong>红石定律：</strong> 红石信号强度会随着距离减弱，每15格需要中继器加强。
+            </div>
+        </div>
+        
+        <!-- 高级技巧部分 -->
+        <h2 id="advanced">高级技巧</h2>
+        
+        <div class="content-block">
+            <h3>高效挖矿技巧</h3>
+            
+            <ul>
+                <li><strong>鱼骨挖矿法：</strong> 主隧道两侧挖分支，间隔2-3格</li>
+                <li><strong>钻石层：</strong> Y=11是最佳钻石开采高度</li>
+                <li><strong>水桶技巧：</strong> 随身携带水桶应对熔岩</li>
+            </ul>
+            
+            <h3>附魔策略</h3>
+            
+            <ul>
+                <li><strong>经验农场：</strong> 建造刷怪塔获取大量经验</li>
+                <li><strong>书架摆放：</strong> 附魔台周围15个书架可获得最高级附魔</li>
+                <li><strong>优先附魔：</strong> 效率、时运、保护、无限等</li>
+            </ul>
+            
+            <h3>末地准备</h3>
+            
+            <p>挑战末影龙前的准备清单：</p>
+            
+            <ol>
+                <li>钻石装备（至少保护IV）</li>
+                <li>附魔弓（力量V，无限）</li>
+                <li>大量箭矢</li>
+                <li>末影珍珠（至少16个）</li>
+                <li>金苹果和药水</li>
+                <li>床（在末地可以爆炸破坏水晶）</li>
+            </ol>
+            
+            <div class="note">
+                <strong>末地战术：</strong> 先摧毁所有末地水晶，再集中攻击末影龙。当龙在祭坛上休息时是攻击的最佳时机。
+            </div>
+        </div>
+        
+        <!-- 返回官网按钮 -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" class="btn btn-primary">← 返回Minecraft官网</a>
+        </div>
+    </div>
+    
+    <script>
+        // 导航栏折叠功能
+        function toggleNav() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.classList.toggle("active");
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // 如果是移动设备，点击后折叠导航栏
+                if (window.innerWidth <= 768) {
+                    document.getElementById("navLinks").classList.remove("active");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
